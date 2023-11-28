@@ -20,22 +20,15 @@ namespace Matrices
             
             ///Read element at row i, column j
             ///usage: double x = a(i,j);
-            const double& operator()(int i, int j) const
-            {
-                return a.at(i).at(j);
-            }
+            const double& operator()(int i, int j) const { return a.at(i).at(j); }
             
             ///Assign element at row i, column j
             ///usage: a(i,j) = x;
-            double& operator()(int i, int j)
-            {
-                //return a[i][j];
-                return a.at(i).at(j);
-            }
+            double& operator()(int i, int j) { return a.at(i).at(j); } //return a[i][j];
             
-            int getRows() const{return rows;}
+            int getRows() const { return rows; }
             
-            int getCols() const{return cols;}
+            int getCols() const { return cols; }
             ///************************************
         private:
             vector<vector<double> > a;
