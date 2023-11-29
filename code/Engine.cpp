@@ -22,6 +22,33 @@ void Engine::run() {
         p.input();
         p.update(time2);
         p.draw();
+    
     }
 }
 
+void Engine::input() {
+    Event event;
+    
+    while (m_Window.pollEvent(event)) {
+        
+        if (Keyboard::isKeyPressed(Keyboard::Escape)) {   
+			m_Window.close();
+		}
+
+        if (event.type == Event::Closed) { m_Window.close(); }
+            
+        if (event.type == Event::MouseButtonPressed) {
+            if (event.mouseButton.button == sf::Mouse::Left) {
+                //update here
+            }
+        }
+    }
+}
+
+void Engine::update(float dtAsSeconds) {
+
+}
+
+voide Engine::draw() {
+
+}
