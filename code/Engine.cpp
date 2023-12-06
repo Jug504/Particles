@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "Particle.h"
 
 #include <iostream>
 using namespace std;
@@ -40,6 +41,11 @@ void Engine::input() {
         if (event.type == Event::MouseButtonPressed) {
             if (event.mouseButton.button == sf::Mouse::Left) {
                 //update here
+                for(int i = 0; i < 5; i++) {
+                    int numPoints = rand()%(50 - 25)+25;
+                    Vector2i position(event.mouseButton.x, event.mouseButton.y);
+                    Particle genParticle(m_Window, numPoints, position);//This needs help I don't think I'm doing it right
+                }
             }
         }
     }
