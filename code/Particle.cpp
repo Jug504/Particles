@@ -1,5 +1,26 @@
 #include "Particle.h"
 
+Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosition):m_A(2, numPoints) {
+    m_ttl = TTL;
+    m_numPoints = numPoints;
+    m_radiansPerSec = (float)rand()/(RAND_MAX)*M_PI;
+    m_cartesianPlane.setCenter(0,0);
+    m_cartesianPlane.setSize(target.getSize().x, (-1, 0) * target.getSize().y);
+    m_centerCoordinate = target.mapPixelToCoords(mouseClickPosition, m_cartesianPlane); //Not sure about this line
+    m_vx = rand()%(500 - 100 + 1) + 100;
+    m_vy = rand()%(500 - 100 + 1) + 100;
+    //Assign m_color1 and m_color2 with Colors (make them pretty...pretty please)
+    //Still need to generate numPoint
+}
+
+void Particle::draw(RenderTarget& target, RenderStates states) const override{
+
+}
+
+void Particle::update(float dt){
+
+}
+
 bool Particle::almostEqual(double a, double b, double eps) {
     return fabs(a - b) < eps;
 }

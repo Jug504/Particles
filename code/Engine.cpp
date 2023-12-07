@@ -44,7 +44,7 @@ void Engine::input() {
                 for(int i = 0; i < 5; i++) {
                     int numPoints = rand()%(50 - 25)+25;
                     Vector2i position(event.mouseButton.x, event.mouseButton.y);
-                    Particle genParticle(m_Window, numPoints, position);//This needs help I don't think I'm doing it right
+                    Particle m_particles(m_Window, numPoints, position);//This needs help I don't think I'm doing it right
                 }
             }
         }
@@ -52,7 +52,9 @@ void Engine::input() {
 }
 
 void Engine::update(float dtAsSeconds) {
-
+    for(int i = 0; i < m_particles; i++){
+        m_particles.update(m_particles.at(i)); //what is going on here
+    }
 }
 
 voide Engine::draw() {
