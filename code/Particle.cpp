@@ -11,6 +11,9 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
     m_vy = rand()%(500 - 100 + 1) + 100;
     //Assign m_color1 and m_color2 with Colors (make them pretty...pretty please)
     //Still need to generate numPoint
+    double theta = rand()%(M_PI/2 + 1);
+    double dTheta = (2 * M_PI)/(numPoints - 1);
+    
 }
 
 void Particle::draw(RenderTarget& target, RenderStates states) const override{
