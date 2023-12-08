@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
+#include <cmath>
+
 using namespace std;
 
 namespace Matrices
@@ -37,8 +39,9 @@ namespace Matrices
             
             int getCols() const{return cols;}
             ///************************************
-        private:
+        protected:
             vector<vector<double> > a;
+        private:
             int rows;
             int cols;
     };
@@ -62,5 +65,18 @@ namespace Matrices
     ///Output matrix.
     ///Separate columns by ' ' and rows by '\n'
     ostream& operator<<(ostream& os, const Matrix& a);
+
+    class RotationMatrix: public Matrix {
+        RotationMatrix(double theta);
+    }
+
+    class ScalingMatrix: public Matrix {
+        ScalingMatrix(double scale);
+    }
+
+    class TranslationMatrix: public Matrix {
+        TranslationMatrix(double xShift, double yShift, int nCols);
+    }
+
 }
 #endif // MATRIX_H_INCLUDED
