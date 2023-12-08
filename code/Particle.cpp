@@ -13,7 +13,16 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
     //Still need to generate numPoint
     double theta = rand()%(M_PI/2 + 1);
     double dTheta = (2 * M_PI)/(numPoints - 1);
-    
+    for(unsigned int j = 0; j < numPoints; j++){
+        int r;
+        double dx, dy;
+        r = rand()%(80 - 20 + 1) + 20;
+        dx = r * cos(theta);
+        dy = r * sin(theta);
+        m_A(0, j) = m_centerCoordinate.x + dx;
+        m_A(1, j) = m_centerCoordinate.y + dy;
+        theta = dTheta + 1;
+    }
 }
 
 void Particle::draw(RenderTarget& target, RenderStates states) const override{
