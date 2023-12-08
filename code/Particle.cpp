@@ -10,7 +10,7 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
     m_vx = rand()%(500 - 100 + 1) + 100;
     m_vy = rand()%(500 - 100 + 1) + 100;
     //Assign m_color1 and m_color2 with Colors (make them pretty...pretty please)
-    //Still need to generate numPoint
+    //generating numPoint
     double theta = rand()%(M_PI/2 + 1);
     double dTheta = (2 * M_PI)/(numPoints - 1);
     for(unsigned int j = 0; j < numPoints; j++){
@@ -26,11 +26,27 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
 }
 
 void Particle::draw(RenderTarget& target, RenderStates states) const override{
-
+    VertexArray lines(TriangleFan, numPoints+1);
+    Vector2f = center;
+    center = target.mapPixelToCoords(m_centerCoordinate, m_cartesianPlane);
+    lines[0].position = center;
+    lines[0].color = m_color;
+    for(unsigned int j = 1; j <= m_numPoints; j++) {
+        lines[j].position = target.mapCoordsToPixel(m_A(j - 1, 0), m_cartesianPlane);
+        lines[j].color = m_Color2;
+    }
+    target.draw(lines);
 }
 
 void Particle::update(float dt){
-
+    m_ttl -= dt;
+    rotate(dt * m_radiansPerSec);
+    scale(SCALE);
+    float dx, dy;
+    dx = (m_vx * dt);
+    m_vy -= (G * dt);
+    dy = (m_vy * dt);
+    translate(dx, dy);
 }
 
 bool Particle::almostEqual(double a, double b, double eps) {
