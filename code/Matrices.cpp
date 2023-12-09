@@ -145,7 +145,12 @@ namespace Matrices
     TranslationMatrix::TranslationMatrix(double xShift,double yShift,int nCols) : Matrix(2,nCols) {
         for(int i = 0; i < 2; i++) {
             for (int j = 0; j < nCols; j++) {
-                
+                if (i == 0) {
+                    a.at(i).at(j) = xShift;
+                }
+                else {
+                    a.at(i).at(j) = yShift;
+                }
             }
         }
     }
