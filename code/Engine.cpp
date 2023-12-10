@@ -1,7 +1,7 @@
 #include "Engine.h"
 
 Engine::Engine() {
-    m_Window.create(VideoMode::getDesktopMode(), "Particles", Style::Default());
+    m_Window.create(VideoMode::getDesktopMode(), "Particles", Style::Default);
 }
 
 void Engine::run() {
@@ -14,9 +14,9 @@ void Engine::run() {
     while(m_Window.isOpen()) {
         Time time1 = clock.restart();
         float time2 = time1.asSeconds();
-        p.input();
-        p.update(time2);
-        p.draw();
+        input();
+        update(time2);
+        draw();
     
     }
 }

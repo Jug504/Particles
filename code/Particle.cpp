@@ -3,10 +3,10 @@
 Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosition):m_A(2, numPoints) {
     m_ttl = TTL;
     m_numPoints = numPoints;
-    m_radiansPerSec = (float)rand()/(RAND_MAX)*M_PI;
+    m_radiansPerSec = (float)rand()/(RAND_MAX)*MY_PI;
     
     m_cartesianPlane.setCenter(0,0);
-    m_cartesianPlane.setSize(target.getSize().x, (-1, 0) * target.getSize().y);
+    m_cartesianPlane.setSize(target.getSize().x, (-1.0) * target.getSize().y);
     
     m_centerCoordinate = target.mapPixelToCoords(mouseClickPosition, m_cartesianPlane);
     
@@ -17,12 +17,12 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
     }
     m_vy = rand()%(500 - 100 + 1) + 100;
     
-    m_color1(rand()%256, rand()%256, rand()%256);
-    m_color2(rand()%256, rand()%256, rand()%256);
+    m_color1 = Color(rand()%256, rand()%256, rand()%256);
+    m_color2 = Color(rand()%256, rand()%256, rand()%256);
     //generating numPoint
-    float theta = (float)rand()%(M_PI/2 + 1);
-    float dTheta = (2 * M_PI)/(numPoints - 1);
-    for(unsigned int j = 0; j < numPoints; j++){
+    float theta = ((float)rand() / RAND_MAX) * M_PI / 2;
+    float dTheta = (2 * MY_PI)/(numPoints - 1);
+    for(int j = 0; j < numPoints; j++){
         float r;
         float dx, dy;
         
@@ -37,16 +37,16 @@ Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosit
     }
 }
 
-void Particle::draw(RenderTarget& target, RenderStates states) const override{
-    VertexArray lines(TriangleFan, numPoints+1);
-    Vector2f center (target.mapPixelToCoords(m_centerCoordinate, m_cartesianPlane));
+void Particle::draw(RenderTarget& target, RenderStates states) const {
+    VertexArray lines(TriangleFan, m_numPoints+1);
+    Vector2f center(target.mapCoordsToPixel(m_centerCoordinate, m_cartesianPlane));
     
     lines[0].position = center;
     lines[0].color = m_color1;
     
-    for(unsigned int j = 1; j <= m_numPoints; j++) {
+    for(int j = 1; j <= m_numPoints; j++) {
         lines[j].position = (Vector2f)(target.mapCoordsToPixel(Vector2f(m_A(0, j - 1), m_A(1, j - 1)), m_cartesianPlane));
-        lines[j].color = m_Color2;
+        lines[j].color = m_color2;
     }
     
     target.draw(lines);
@@ -93,8 +93,8 @@ bool Particle::almostEqual(double a, double b, double eps) {
 void Particle::unitTests() {
     int score = 0;
     cout << "Testing RotationMatrix constructor...";
-    double theta = M_PI / 4.0;
-    RotationMatrix r(M_PI / 4);
+    double theta = MY_PI / 4.0;
+    RotationMatrix r(MY_PI / 4);
     
     if (r.getRows() == 2 && r.getCols() == 2 && almostEqual(r(0, 0), cos(theta)) && almostEqual(r(0, 1), -sin(theta)) && almostEqual(r(1, 0), sin(theta)) && almostEqual(r(1, 1), cos(theta))) {
         cout << "Passed. +1" << endl;
@@ -135,7 +135,7 @@ void Particle::unitTests() {
     
     Matrix initialCoords = m_A;
     
-    rotate(M_PI / 2.0);
+    rotate(MY_PI / 2.0);
     bool rotationPassed = true;
 
     for (int j = 0; j < initialCoords.getCols(); j++) {
