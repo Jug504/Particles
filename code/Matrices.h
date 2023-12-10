@@ -68,15 +68,15 @@ namespace Matrices
 
     class RotationMatrix: public Matrix {
         RotationMatrix(double theta);
-    }
+    };
 
     class ScalingMatrix: public Matrix {
         ScalingMatrix(double scale);
-    }
+    };
 
     class TranslationMatrix: public Matrix {
         TranslationMatrix(double xShift, double yShift, int nCols);
-    }
+    };
 
 }
 #endif // MATRIX_H_INCLUDED
