@@ -1,12 +1,7 @@
 #include "Engine.h"
-#include "Particle.h"
-
-#include <iostream>
-using namespace std;
 
 Engine::Engine() {
-    m_Window.create();
-    VideoMode::getDesktopMode();
+    m_Window.create(VideoMode::getDesktopMode(), "Particles", Style::Default());
 }
 
 void Engine::run() {
@@ -17,9 +12,8 @@ void Engine::run() {
     cout << "Unit tests complete.  Starting engine..." << endl;
 
     while(m_Window.isOpen()) {
-        clock.restart();
-        Time time1 = clock.getElapsedTime();
-        Time time2 = time1.asSeconds();
+        Time time1 = clock.restart();
+        float time2 = time1.asSeconds();
         p.input();
         p.update(time2);
         p.draw();
@@ -39,12 +33,13 @@ void Engine::input() {
         if (event.type == Event::Closed) { m_Window.close(); }
             
         if (event.type == Event::MouseButtonPressed) {
-            if (event.mouseButton.button == sf::Mouse::Left) {
+            if (event.mouseButton.button == Mouse::Left) {
                 //update here
                 for(int i = 0; i < 5; i++) {
                     int numPoints = rand()%(50 - 25)+25;
                     Vector2i position(event.mouseButton.x, event.mouseButton.y);
-                    Particle m_particles(m_Window, numPoints, position);//This needs help I don't think I'm doing it right
+                    Particle p(m_Window, numPoints, position);
+		    m_particles.push_back(p);
                 }
             }
         }
@@ -52,11 +47,26 @@ void Engine::input() {
 }
 
 void Engine::update(float dtAsSeconds) {
-    for(int i = 0; i < m_particles; i++){
-        m_particles.update(m_particles.at(i)); //what is going on here
+    auto it = m_particles.begin();
+    while (it != m_particles.end())
+    {
+        if (it -> getTTL() > 0.0)
+        {
+            it -> update(dtAsSeconds);
+            it++;
+        }
+        else
+        {
+            it = m_particles.erase(it);
+        }
     }
 }
 
-voide Engine::draw() {
-
+void Engine::draw() {
+	m_Window.clear();
+	for (const Particle& particle : m_particles)
+    	{
+            m_Window.draw(particle);
+    	}
+	m_Window.display();
 }
